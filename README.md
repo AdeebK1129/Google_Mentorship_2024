@@ -1,21 +1,9 @@
-# Google_Mentorship_2024
+# NYC School District Heatmap
 
-# NYC School District Heatmap Visualization
+---
 
-## Overview
-This project provides an interactive heatmap visualization of New York City school district data using survey metrics from the NYC Department of Education (NYCDOE). Users can select metrics to compare average school performance across different NYC districts, which are visualized through a dynamic map interface.
-
-### Project Structure
-- **backend**: A Flask API that serves the NYC school survey data. It provides endpoints for fetching survey metrics and calculating district averages.
-- **frontend**: A React application that visualizes the data on an interactive map using D3.js.
-
-## Purpose and Goals
-The purpose of this project is to:
-1. Visualize disparities in education metrics across NYC districts.
-2. Provide an easy-to-use interface to explore and understand school performance data.
-3. Allow users to interact with the map to see various metrics per district.
-
-By displaying these metrics visually, the project aims to offer insights into educational quality, accessibility, and other performance indicators in different NYC districts.
+## Project Overview
+The NYC School District Heatmap is a data visualization project designed to illustrate and compare school quality metrics across various districts in New York City. By utilizing 2023 survey data and geographical district information, this project provides an interactive map, enabling users to explore educational disparities across school districts.
 
 ---
 
@@ -31,5 +19,90 @@ To set up and run the project locally, you’ll need:
 
 #### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/nyc_school_heatmap.git
+git clone https://github.com/yourusername/nyc_school_heatmap.git  
 cd nyc_school_heatmap
+```
+
+#### 2. Set Up the Backend
+1. Navigate to the `backend` directory:
+```bash
+cd backend
+```
+
+2. Create a virtual environment (optional but recommended):
+```bash
+python3 -m venv venv  
+source venv/bin/activate  # On Windows, use venv\\Scripts\\activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt  
+```
+
+4. Start the Flask server:
+```bash  
+python app.py
+```
+
+The Flask API should now be running at `http://127.0.0.1:5000`.
+
+#### 3. Set Up the Frontend
+1. Navigate to the `frontend` directory:
+```bash 
+cd ../frontend
+```
+
+3. Install dependencies:
+```bash
+npm install
+``` 
+
+5. Start the React development server:
+```bash 
+npm start
+```  
+
+The React app should now be running at `http://localhost:3000` and will automatically connect to the Flask backend.
+
+---
+
+## Project Structure
+
+- **backend/**: Contains the Flask backend application.
+  - `app.py`: Main Flask application that serves as the API endpoint for the React frontend.
+  - `final_combined_data.csv`: The dataset containing school quality metrics and district information.
+  - `requirements.txt`: Python dependencies for the backend.
+
+- **frontend/**: Contains the React frontend application.
+  - `src/`: Main source folder for React components and logic.
+  - `public/`: Contains static files including `index.html`.
+  - `package.json`: Node.js dependencies for the frontend.
+
+---
+
+## Usage
+
+1. After setting up both the backend and frontend, open a web browser and go to `http://localhost:3000`.
+2. Select a metric from the dropdown to visualize various school district metrics on the map.
+3. Hover over a district to see average values for that district’s selected metric.
+
+---
+
+## API Endpoints
+
+The Flask backend provides the following endpoints:
+
+- **GET /metrics**  
+Returns the list of available metrics.
+
+- **GET /districts/<metric>**  
+Returns the average value of the specified metric for each district.
+
+---
+
+## Technologies Used
+
+- **Frontend**: React, D3.js for data visualization
+- **Backend**: Flask, Pandas
+- **Data Source**: NYC Department of Education 2023 Survey Data
