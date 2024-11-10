@@ -1,0 +1,31 @@
+# Node dependencies
+node_modules
+frontend/build/
+
+# Python dependencies
+backend/venv/
+backend/__pycache__/
+
+# Environment variables
+backend/.env
+frontend/.env
+
+# Pyenv
+venv
+
+# Logs and databases
+*.log
+*.csv
+*.sqlite3
+
+# Byte-compiled Python files
+*.pyc
+*.pyo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Miscellaneous
+.vscode/
+.idea/

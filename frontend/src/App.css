@@ -1,0 +1,277 @@
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.section {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Left Intro */
+.left-panel img {
+  width: 100%;
+}
+
+.left-panel {
+  color: black;
+  background-color: #cceeff;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.left-panel .illustration {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.left-panel h1 {
+  font-size: 2em;
+  margin: 20px 0;
+}
+
+.left-panel p {
+  font-size: 1em;
+  line-height: 1.5;
+  max-width: 600px;
+}
+/* Right Intro */
+.right-panel {
+  background-color: #f5f5f5;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.heatmap-preview {
+  width: 80%;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: ease-in-out 300ms;
+}
+
+.heatmap-preview:hover {
+  transform: scale(1.05);
+}
+
+.heatmap-preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hmb-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.heatmap-button {
+  background: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+/* Hero Section */
+.hero {
+  background-image: url('/public/images/doebuilding.jpeg'); 
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: relative; 
+}
+.hero .mask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute; 
+  top: 0;
+  left: 0;
+  margin: 0; 
+  padding: 0; 
+}
+.hero .text-white {
+  text-align: center;
+}
+/* Stats Section */
+.stats-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 50px 0;
+  background-color: #f5f5f5;
+  text-align: left;
+  color: black;
+}
+
+.stats-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.stats-content h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.stats-content p {
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+.stats-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.stats-image img {
+  width: 100%;
+  height: auto;
+}
+
+/* Resources Section */
+.resources-section {
+  background-color: #cceeff;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.resources-heading {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: black;
+}
+
+.resource-columns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.resource-column {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 30%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.resource-column h2 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.resource-column p {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.icon-placeholder {
+  background-color: #cccccc;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  color: #ffffff;
+}
+
+/* About Us Section */
+.about-section {
+  text-align: center;
+  padding: 50px 0;
+  background-color: #f5f5f5;
+  color: black;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap; /* Ensure cards are in a single row */
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+}
+
+.card img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card h2 {
+  font-size: 1.5em;
+  margin: 15px 0;
+}
+
+.card p {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #666666;
+}
+
+.card-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.card-links a {
+  margin: 0 10px;
+}
+
+.card-links img {
+  width: 24px;
+  height: 24px;
+  border-radius: 0; /* Ensure icons are not circles */
+}

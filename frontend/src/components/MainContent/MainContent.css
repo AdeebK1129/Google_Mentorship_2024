@@ -1,0 +1,49 @@
+.main-content {
+    width: 80%;
+    padding: 20px;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Add this line */
+    color: black; /* Ensure text color is black */
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    color: black; /* Ensure text color is black */
+  }
+
+
+  .overview, .additional-info {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #e7f7ff;
+    border-radius: 10px;
+    color: black; /* Ensure text color is black */
+  }
+  
+  .overview-stats {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .stat {
+    text-align: center;
+  }
+  
+  .stat-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .stat-value {
+    font-size: 1.2em;
+    color: #2a9d8f;
+  }
+  
+.graph-bars{
+    width:50px;
+    color: #2a9d8f;
+}
