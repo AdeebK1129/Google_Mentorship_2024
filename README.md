@@ -71,7 +71,7 @@ The React app should now be running at `http://localhost:3000` and will automati
 
 - **backend/**: Contains the Flask backend application.
   - `app.py`: Main Flask application that serves as the API endpoint for the React frontend.
-  - `final_combined_data.csv`: The dataset containing school quality metrics and district information.
+  - `data` folder: Contains datasets containing school quality metrics and district information.
   - `requirements.txt`: Python dependencies for the backend.
 
 - **frontend/**: Contains the React frontend application.

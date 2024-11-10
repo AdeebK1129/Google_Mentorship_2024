@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
 import * as d3 from 'd3';
 import './HeatMap.css';
 
@@ -80,54 +81,84 @@ const HeatMap = () => {
     console.log("Drawing map...");
     const width = 700;
     const height = 580;
-  
+
     d3.select('#map').selectAll('*').remove();
     const svg = d3.select('#map')
-      .attr('width', width)
-      .attr('height', height);
-  
+        .attr('width', width)
+        .attr('height', height);
+
     const projection = d3.geoMercator().fitSize([width, height], geoJsonData);
     const path = d3.geoPath().projection(projection);
-  
-    // Use the dynamically set maxValue to adjust color scale
+
+    // Set color scale based on maxValue for numeric and mapped categorical data
     const colorScale = d3.scaleLinear()
-      .domain([0, maxValue || 1])
-      .range(["#e0f7fa", "#006064"]);
-  
-    svg.selectAll('path')
-      .data(geoJsonData.features)
-      .enter().append('path')
-      .attr('d', path)
-      .attr('fill', d => colorScale(districtData[d.properties.school_dist] || 0))
-      .attr('stroke', '#333')
-      .on('mouseover', function (event, d) {
-        const district = d.properties.school_dist;
-        const value = districtData[district];
-  
-        let tooltipContent = `District: ${district}<br>`;
-        if (typeof value === 'number') {
-            tooltipContent += `Average Metric: ${value.toFixed(2)}`;
-        } else if (typeof value === 'object') {
-            Object.keys(value).forEach((key) => {
-                tooltipContent += `${key}: ${value[key]}<br>`;
-            });
-        } else {
-            tooltipContent += `${value}`;
-        }
-  
-        d3.select('#tooltip')
-            .style('visibility', 'visible')
-            .html(tooltipContent)
-            .style('top', `${event.pageY - 10}px`)
-            .style('left', `${event.pageX + 10}px`);
-      })
-      .on('mouseout', () => d3.select('#tooltip').style('visibility', 'hidden'));
-  
+        .domain([0, maxValue || 1])  // Use dynamically fetched maxValue or 1 for mapped categories
+        .range(["#e0f7fa", "#006064"]);
+
+        svg.selectAll('path')
+        .data(geoJsonData.features)
+        .enter().append('path')
+        .attr('d', path)
+        .attr('fill', d => {
+            const district = d.properties.school_dist;
+            const data = districtData[district];
+    
+            // Case 1: Numeric metric
+            if (typeof data === 'number') {
+                return colorScale(data);
+            }
+            // Case 2: Rating or Quality Review metric with averageScore
+            if (data && typeof data === 'object' && data.hasOwnProperty('averageScore')) {
+                return colorScale(data.averageScore);
+            }
+            // Case 3: Non-analytical non-numeric metric (e.g., School Name)
+            return '#ddd';
+        })
+        .attr('stroke', '#333')
+        .attr('stroke-width', 0.5) // Default border width
+        .on('mouseover', function (event, d) {
+            const district = d.properties.school_dist;
+            const data = districtData[district];
+    
+            // Increase border width on hover
+            d3.select(this).attr('stroke-width', 2);
+    
+            let tooltipContent = `District: ${district}<br>`;
+            if (selectedMetric) {
+                // Show average metric or frequency based on data type
+                if (typeof data === 'number') {
+                    tooltipContent += `Average Metric: ${data.toFixed(2)}`;
+                } else if (data && typeof data === 'object' && data.hasOwnProperty('frequency')) {
+                    tooltipContent += `Frequency:<br>`;
+                    Object.keys(data.frequency).forEach(key => {
+                        tooltipContent += `${key}: ${data.frequency[key]}<br>`;
+                    });
+                } else if (data && typeof data === 'object' && data.hasOwnProperty('averageScore')) {
+                    tooltipContent += `Average Score: ${data.averageScore.toFixed(2)}<br>Frequency:<br>`;
+                    Object.keys(data.frequency).forEach(key => {
+                        tooltipContent += `${key}: ${data.frequency[key]}<br>`;
+                    });
+                }
+            }
+    
+            d3.select('#tooltip')
+                .style('visibility', 'visible')
+                .html(tooltipContent)
+                .style('top', `${event.pageY - 10}px`)
+                .style('left', `${event.pageX + 10}px`);
+        })
+        .on('mouseout', function () {
+            // Reset border width on mouse out
+            d3.select(this).attr('stroke-width', 0.5);
+            d3.select('#tooltip').style('visibility', 'hidden');
+        });
+    
+
     drawLegend(colorScale);
     console.log("Map has been drawn.");
   };
-  
 
+  
   const drawLegend = (colorScale) => {
     console.log("Drawing legend...");
     const legendWidth = 300;
@@ -171,15 +202,14 @@ const HeatMap = () => {
   return (
     <div className="container mx-auto mt-6 p-4 bg-white rounded shadow flex flex-col items-center">
       <h1 className="text-xl font-bold mb-4">School Districts Map</h1>
-      <select
-        onChange={(e) => setSelectedMetric(e.target.value)}
-        className="form-select mb-4 w-full max-w-lg"
-      >
-        <option value="">Select a metric</option>
-        {metrics.map((metric) => (
-          <option key={metric} value={metric}>{metric}</option>
-        ))}
-      </select>
+      <div className="select-container">
+      <Select
+        options={metrics.map(metric => ({ label: metric, value: metric }))}
+        onChange={(option) => setSelectedMetric(option ? option.value : '')}
+        placeholder="Select a metric..."
+        isClearable
+      />
+      </div>
       <svg id="map" className="border mx-auto mt-4" style={{ maxWidth: "700px", width: "100%" }}></svg>
       <div id="tooltip" className="tooltip"></div>
       <div id="legend" className="mt-4 flex justify-center items-center space-x-4">
