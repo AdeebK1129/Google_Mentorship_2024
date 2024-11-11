@@ -52,7 +52,7 @@ python app.py
 The Flask API should now be running at `http://127.0.0.1:5004`.
 
 #### 3. Set Up the Frontend
-1. Navigate to the `frontend` directory:
+1. In another terminal tab, navigate to the `frontend` directory:
 ```bash 
 cd ../frontend
 ```
