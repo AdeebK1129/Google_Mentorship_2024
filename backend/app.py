@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS
 import pandas as pd
 import os
@@ -48,21 +48,13 @@ def load_dataset(school_type):
         raise ValueError(f"Invalid school type or dataset not found for school type: {school_type}")
     return pd.read_csv(data_path)
 
-# Route to display a simple index message
-# This route acts as the base endpoint, providing a simple indication that the server is running
-@app.route('/')
-def index():
-    """
-    Base endpoint to verify that the server is running.
-
-    Returns:
-        str: A simple message indicating that the API is running.
-
-    Usage in HeatMap.jsx:
-        This route is used for initial verification to ensure that the backend is running and accessible.
-        It helps confirm the connection between the frontend and backend during the initial setup.
-    """
-    return "NYC Heatmap Backend API"
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 # Route to retrieve available metrics from the dataset
 # Endpoint: /metrics
