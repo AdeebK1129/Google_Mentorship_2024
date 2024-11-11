@@ -5,7 +5,7 @@ import os
 
 # Initialize Flask app, setting static_folder to point to frontend build
 app = Flask(__name__, static_folder="../frontend/build", static_url_path="")
-CORS(app, resources={r"/*": {"origins": "*"}})  # Adjusted to allow all origins
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Define paths for datasets based on school type
 # Each key corresponds to a type of school, and the value is the file path to the dataset
@@ -46,14 +46,21 @@ def load_dataset(school_type):
         raise ValueError(f"Invalid school type or dataset not found for school type: {school_type}")
     return pd.read_csv(data_path)
 
-# Route to serve frontend React app
+# Serve React frontend for all other routes
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_frontend(path):
+    """
+    Serve the React app for all unknown routes. 
+    This lets React Router handle the routing client-side.
+    """
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
     else:
+        # Serve index.html for any route not found in Flask, to let React Router take over
         return send_from_directory(app.static_folder, "index.html")
+
+# Add your existing API routes here (e.g., /metrics, /districts, etc.)
 
 # Route to retrieve available metrics from the dataset
 # Endpoint: /metrics
