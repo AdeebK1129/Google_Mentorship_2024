@@ -6,9 +6,21 @@ import os
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
-# Load the dataset
-data_path = './data/final_combined_hs_data.csv'
-df = pd.read_csv(data_path)
+# Define paths for different school types
+data_paths = {
+    'hs': './data/final_combined_hs_data.csv',
+    'ems': './data/final_combined_ems_data.csv',
+    'hst': './data/final_combined_hst_data.csv',
+    'd75': './data/final_combined_d75_data.csv',
+    'ec': './data/final_combined_ec_data.csv'
+}
+
+# Load dataset based on school type
+def load_dataset(school_type):
+    data_path = data_paths.get(school_type)
+    if not data_path or not os.path.exists(data_path):
+        raise ValueError(f"Invalid school type or dataset not found for school type: {school_type}")
+    return pd.read_csv(data_path)
 
 @app.route('/')
 def index():
@@ -16,12 +28,23 @@ def index():
 
 @app.route('/metrics', methods=['GET'])
 def get_metrics():
-    metrics = [col for col in df.columns if col not in ['DBN', 'Geographical_District_code']]
-    return jsonify(metrics=metrics)
+    school_type = request.args.get('schoolType', 'hs')
+    try:
+        df = load_dataset(school_type)
+        metrics = [col for col in df.columns if col not in ['DBN', 'Geographical_District_code']]
+        return jsonify(metrics=metrics)
+    except ValueError as e:
+        return jsonify(error=str(e)), 400
 
 @app.route('/districts', methods=['GET'])
 def get_district_data():
+    school_type = request.args.get('schoolType', 'hs')
     metric = request.args.get('metric')
+    try:
+        df = load_dataset(school_type)
+    except ValueError as e:
+        return jsonify(error=str(e)), 400
+
     if metric not in df.columns:
         return jsonify(error=f"Metric '{metric}' not found"), 400
 
@@ -72,10 +95,15 @@ def get_district_data():
 
     return jsonify(districtAverages=district_data)
 
-
 @app.route('/max_value', methods=['GET'])
 def get_max_value():
+    school_type = request.args.get('schoolType', 'hs')
     metric = request.args.get('metric')
+    try:
+        df = load_dataset(school_type)
+    except ValueError as e:
+        return jsonify(error=str(e)), 400
+
     if metric not in df.columns:
         return jsonify(error=f"Metric '{metric}' not found"), 400
 
