@@ -1,3 +1,29 @@
+/**
+ * ResourcesSection Component
+ * 
+ * This component renders a section with resources targeted at different educational levels, including Elementary,
+ * Middle, and High School. The resources provide guidance and information on how students and parents can prepare
+ * for future educational milestones.
+ * 
+ * Component Structure:
+ * - The main container consists of a heading and multiple resource columns.
+ * - Each column represents a specific school level, containing an icon, a heading, and a description.
+ * 
+ * Props:
+ * None
+ * 
+ * State:
+ * None
+ * 
+ * CSS Classes:
+ * - `resources-section`: Main container for the resources section.
+ * - `resources-heading`: CSS class for the section heading, used for styling the header.
+ * - `resource-columns`: Wrapper for individual resource columns to align them properly.
+ * - `resource-column`: Container for each individual resource item, including an icon, heading, and description.
+ * - `icon-placeholder`: CSS class for the icon container, used for visual representation of each resource.
+ * 
+ * @returns {JSX.Element} A React component that renders the resources section with different educational guides.
+ */
 import React from 'react';
 
 const ResourcesSection = () => {

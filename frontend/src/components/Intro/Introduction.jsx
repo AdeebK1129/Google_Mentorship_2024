@@ -1,3 +1,26 @@
+/**
+ * Introduction Component
+ * 
+ * This component renders the introduction section of the page, providing context and purpose for the platform.
+ * It aims to engage users by explaining the motivation behind the site and its focus on educational disparities.
+ * 
+ * Component Structure:
+ * - The main container consists of an illustration and a text section introducing the platform.
+ * - Includes an image that serves as a visual representation, followed by a heading and a descriptive paragraph.
+ * 
+ * Props:
+ * None
+ * 
+ * State:
+ * None
+ * 
+ * CSS Classes:
+ * - `left-panel`: Wrapper for the entire introduction section, typically used for layout purposes.
+ * - `illustration`: Container for the image that visually supports the introduction.
+ * - `people`: Image ID for targeting specific styling of the illustration.
+ * 
+ * @returns {JSX.Element} A React component that renders the introduction section of the page.
+ */
 import React from 'react';
 
 const Introduction = () => {

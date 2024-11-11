@@ -1,3 +1,22 @@
+/**
+ * AboutSection Component
+ * 
+ * This component renders an 'About the Team' section that showcases the team members involved in the project.
+ * Each team member is displayed as a card containing their name, image, role, skills, and links to their contact information.
+ * The cards are arranged in a flexbox container to maintain a visually appealing layout.
+ * 
+ * Component Structure:
+ * - Main container with a title and a list of team members represented by cards.
+ * - Each card includes an image, name, role description, skills, and contact links.
+ * 
+ * Props:
+ * None
+ * 
+ * State:
+ * None
+ * 
+ * @returns {JSX.Element} A React component that renders the AboutSection.
+ */
 import React from 'react';
 
 const AboutSection = () => {

@@ -69,3 +69,27 @@ h1 {
   width: 300px;
   height: 20px;
 }
+
+.back-arrow-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.back-arrow-btn:hover {
+  color: #0056b3;
+  transform: translateX(-3px);
+}
+
+.back-arrow-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+

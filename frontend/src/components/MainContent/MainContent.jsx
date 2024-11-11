@@ -1,6 +1,33 @@
+/**
+ * MainContent Component
+ * 
+ * This component renders the main content for the page, providing detailed information about a specific school,
+ * including key statistics and an overview of the school in the context of its district.
+ * 
+ * Component Structure:
+ * - The main container includes a header with the school name and district information.
+ * - An overview section compares key metrics like enrollment, attendance, and graduation rates with district averages.
+ * - An additional information section provides more context and background about the school.
+ * 
+ * Props:
+ * None
+ * 
+ * State:
+ * None
+ * 
+ * CSS Classes:
+ * - `main-content`: Main container for the content section.
+ * - `header`: Container for the school name and district information.
+ * - `overview`: Container for the overview statistics, including comparisons with district averages.
+ * - `overview-stats`: Wrapper for individual statistics within the overview section.
+ * - `stat`: Container for each individual statistic, including an icon, title, and value.
+ * - `graph-bars`: CSS class for the icon used to represent the statistics visually.
+ * - `additional-info`: Container for additional information about the school, providing context and background.
+ * 
+ * @returns {JSX.Element} A React component that renders the main content section of the page.
+ */
 import React from 'react';
 import './MainContent.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const MainContent = () => {
   return (
     <div className="main-content">
