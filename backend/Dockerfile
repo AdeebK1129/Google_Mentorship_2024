@@ -1,20 +1,45 @@
-# Use the official Python image as the base image
-FROM python:3.8-slim
+# Frontend Stage
+FROM node:16 AS frontend
 
-# Set the working directory
-WORKDIR /app
+# Set the working directory for the frontend
+WORKDIR /app/frontend
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Copy the frontend code into the container
+COPY frontend/ .
 
-# Install the required Python packages
+# Install dependencies and build the frontend for production
+RUN npm install && npm run build
+
+# Backend Stage
+FROM python:3.8-slim AS backend
+
+# Set the working directory for the backend
+WORKDIR /app/backend
+
+# Copy the requirements and install dependencies
+COPY backend/requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy the rest of the application code into the container
-COPY . .
+# Copy the backend code into the container
+COPY backend/ .
 
-# Expose the port that your Flask app listens on
+# Install a simple server for serving the frontend and proxying requests
+RUN pip install flask-cors gunicorn
+
+# Copy frontend build files from the frontend stage to the backend stage
+COPY --from=frontend /app/frontend/build /app/frontend_build
+
+# Expose the port that Flask listens on
 EXPOSE 5004
 
-# Start the Flask app
-CMD ["python", "app.py"]
+# Create a simple proxy to route frontend and backend requests using Flask
+COPY <<EOF /app/backend/start.sh
+#!/bin/bash
+gunicorn --chdir backend app:app --bind 0.0.0.0:5004
+EOF
+
+# Make the start script executable
+RUN chmod +x /app/backend/start.sh
+
+# Run the start script
+CMD ["/app/backend/start.sh"]
