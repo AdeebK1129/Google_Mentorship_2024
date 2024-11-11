@@ -3,7 +3,11 @@
 ---
 
 ## Project Overview
-The NYC School District Heatmap is a data visualization project designed to illustrate and compare school quality metrics across various districts in New York City. By utilizing 2023 survey data and geographical district information, this project provides an interactive map, enabling users to explore educational disparities across school districts.
+City Learn is a data visualization project designed to illustrate and compare school quality metrics across various districts in New York City. By utilizing 2023 survey data and geographical district information, this project provides an interactive map, enabling users to explore educational disparities across school districts. 
+
+This project was created as part of Stuyvesant High School's Google Mentorship program. In this program, students submit project proposals that must be approved by Stuyvesant Computer Science Department faculty. Upon approval, project members are paired with an active employee at Google to hold scheduled meetings to discuss the progress and outcome of the project.
+
+In our case, I am proud to have worked with Google Solutions Engineer Morgan Brenner who has helped us greatly in giving us further direction for the project while also providing us with tips on project management skills by introducing us to understanding how to use Kanban board and scrum strategies. 
 
 ---
 
