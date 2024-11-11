@@ -16,7 +16,7 @@ const HeatMap = () => {
   // State variables for managing data and user selection
   const [metrics, setMetrics] = useState([]); // Stores available metric options from the backend
   const [selectedMetric, setSelectedMetric] = useState(null); // Stores the currently selected metric
-  const [selectedSchoolType, setSelectedSchoolType] = useState('hs'); // Tracks the selected school type (e.g., High School)
+  const [selectedSchoolType, setSelectedSchoolType] = useState('all'); // Tracks the selected school type (e.g., High School)
   const [districtData, setDistrictData] = useState({}); // Holds the data for each school district
   const [maxValue, setMaxValue] = useState(null); // Stores the maximum value of the selected metric for color scaling
   const [geoJsonData, setGeoJsonData] = useState(null); // Stores the GeoJSON data used for rendering district shapes
@@ -315,6 +315,10 @@ const HeatMap = () => {
       <h1 className="text-xl font-bold mb-4">School Districts Map</h1>
 
       <div className="mb-4">
+        <label className="ml-4">
+          <input type="radio" value="all" checked={selectedSchoolType === 'all'} onChange={handleSchoolTypeChange} />
+          All Schools
+        </label>
         <label>
           <input type="radio" value="hs" checked={selectedSchoolType === 'hs'} onChange={handleSchoolTypeChange} />
           High School

@@ -16,7 +16,8 @@ data_paths = {
     'ems': './data/final_combined_ems_data.csv',
     'hst': './data/final_combined_hst_data.csv',
     'd75': './data/final_combined_d75_data.csv',
-    'ec': './data/final_combined_ec_data.csv'
+    'ec': './data/final_combined_ec_data.csv',
+    "all": "data/final_combined_school_data.csv"
 }
 
 # Function to load the appropriate dataset based on the school type provided
@@ -85,7 +86,7 @@ def get_metrics():
         This route is used in HeatMap.jsx to populate the dropdown menu with the available metrics.
         It allows users to select which metric they want to visualize on the heatmap, helping customize the data displayed.
     """
-    school_type = request.args.get('schoolType', 'hs')
+    school_type = request.args.get('schoolType', 'all')
     try:
         df = load_dataset(school_type)
         # Exclude columns that are not metrics, such as identifiers
