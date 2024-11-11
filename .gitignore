@@ -12,10 +12,10 @@ frontend/.env
 
 # Pyenv
 venv
+virtual
 
 # Logs and databases
 *.log
-*.csv
 *.sqlite3
 
 # Byte-compiled Python files
