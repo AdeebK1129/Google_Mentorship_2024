@@ -11,7 +11,7 @@ COPY frontend/ .
 RUN npm install && npm run build
 
 # Backend Stage
-FROM python:3.8-slim AS backend
+FROM python:3.9-slim AS backend
 
 # Set the working directory for the backend
 WORKDIR /app/backend
@@ -33,10 +33,7 @@ COPY --from=frontend /app/frontend/build /app/frontend_build
 EXPOSE 5004
 
 # Create a simple proxy to route frontend and backend requests using Flask
-COPY <<EOF /app/backend/start.sh
-#!/bin/bash
-gunicorn --chdir backend app:app --bind 0.0.0.0:5004
-EOF
+RUN echo '#!/bin/bash\n gunicorn --chdir /app/backend app:app --bind 0.0.0.0:5004' > /app/backend/start.sh
 
 # Make the start script executable
 RUN chmod +x /app/backend/start.sh
