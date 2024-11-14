@@ -7,13 +7,16 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy requirements file
-COPY backend/requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the app code
-COPY . .
+# Copy the rest of the app code
+COPY . /app
+
+# Install python-dotenv (if required)
+RUN pip install python-dotenv
 
 # Expose the port the app will run on
 EXPOSE 5004
