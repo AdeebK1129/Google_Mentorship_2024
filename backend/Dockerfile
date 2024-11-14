@@ -1,30 +1,24 @@
-# Dockerfile for Flask app
+# Base Python Image
+FROM python:3.9-slim AS backend
 
-# Use a Python base image
-FROM python:3.9-slim
-
-# Set the working directory in the container
+# Set the working directory for the backend
 WORKDIR /app
 
-# Copy requirements file
-COPY backend/requirements.txt /app/requirements.txt
-
-# Install dependencies
+# Copy the requirements and install dependencies
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the app code
-COPY . /app
+# Copy the backend code into the container
+COPY backend/ .
 
-# Install python-dotenv (if required)
-RUN pip install python-dotenv
-
-# Expose the port the app will run on
+# Expose the port that Flask listens on
 EXPOSE 5004
 
 # Set environment variables for Flask
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_ENV=production
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=5004
 
-# Run the Flask app
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5004"]
+# Run the Flask app using Gunicorn for production-level stability
+CMD ["gunicorn", "--bind", "0.0.0.0:5004", "app:app"]
