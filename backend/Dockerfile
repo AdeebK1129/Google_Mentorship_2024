@@ -1,42 +1,27 @@
-# Frontend Stage
-FROM node:16 AS frontend
+# Dockerfile for Flask app
 
-# Set the working directory for the frontend
-WORKDIR /app/frontend
+# Use a Python base image
+FROM python:3.9-slim
 
-# Copy the frontend code into the container
-COPY frontend/ .
+# Set the working directory in the container
+WORKDIR /app
 
-# Install dependencies and build the frontend for production
-RUN npm install && npm run build
+# Copy requirements file
+COPY requirements.txt requirements.txt
 
-# Backend Stage
-FROM python:3.9-slim AS backend
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the working directory for the backend
-WORKDIR /app/backend
+# Copy the app code
+COPY . .
 
-# Copy the requirements and install dependencies
-COPY backend/requirements.txt .
-RUN pip install -r requirements.txt
-
-# Copy the backend code into the container
-COPY backend/ .
-
-# Install a simple server for serving the frontend and proxying requests
-RUN pip install flask-cors gunicorn
-
-# Copy frontend build files from the frontend stage to the backend stage
-COPY --from=frontend /app/frontend/build /app/frontend_build
-
-# Expose the port that Flask listens on
+# Expose the port the app will run on
 EXPOSE 5004
 
-# Create a simple proxy to route frontend and backend requests using Flask
-RUN echo '#!/bin/bash\n gunicorn --chdir /app/backend app:app --bind 0.0.0.0:5004' > /app/backend/start.sh
+# Set environment variables for Flask
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_ENV=production
 
-# Make the start script executable
-RUN chmod +x /app/backend/start.sh
-
-# Run the start script
-CMD ["/app/backend/start.sh"]
+# Run the Flask app
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5004"]

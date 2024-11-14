@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 # Initialize Flask app, setting static_folder to point to frontend build
-app = Flask(__name__, static_folder="../frontend/build", static_url_path="")
+app = Flask(__name__, static_folder="/app/frontend_build", static_url_path="")
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Define paths for datasets based on school type

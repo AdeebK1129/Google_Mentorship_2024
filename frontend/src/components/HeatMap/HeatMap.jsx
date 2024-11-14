@@ -21,6 +21,8 @@ const HeatMap = () => {
   const [maxValue, setMaxValue] = useState(null); // Stores the maximum value of the selected metric for color scaling
   const [geoJsonData, setGeoJsonData] = useState(null); // Stores the GeoJSON data used for rendering district shapes
   const [isMapReset, setIsMapReset] = useState(false); // Flag to reset the map rendering when certain changes occur
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  console.log("Backend URL: ", process.env.REACT_APP_BACKEND_URL);
 
   /**
    * Renders the geographical heatmap using D3.js.
@@ -211,7 +213,7 @@ const HeatMap = () => {
 
     // Fetch available metrics for the selected school type from the Flask backend
     // This backend call (`/metrics?schoolType`) is crucial to populate the dropdown with available metrics
-    fetch(`http://localhost:5004/metrics?schoolType=${selectedSchoolType}`)
+    fetch(`${BACKEND_URL}/metrics?schoolType=${selectedSchoolType}`)
       .then(response => response.json())
       .then(data => {
         setMetrics(data.metrics); // Update the metrics dropdown options based on the selected school type
@@ -255,7 +257,7 @@ const HeatMap = () => {
     if (selectedMetric) {
       // Fetch district-level metric data from the Flask backend
       // This backend call (`/districts?metric&schoolType`) is necessary to get data for the selected metric
-      fetch(`http://localhost:5004/districts?metric=${encodeURIComponent(selectedMetric)}&schoolType=${selectedSchoolType}`)
+      fetch(`${BACKEND_URL}/districts?metric=${encodeURIComponent(selectedMetric)}&schoolType=${selectedSchoolType}`)
         .then(response => {
           if (!response.ok) throw new Error("Non-numeric data detected");
           return response.json();
@@ -275,7 +277,7 @@ const HeatMap = () => {
 
       // Fetch the maximum value for the selected metric from the backend
       // This call (`/max_value?metric&schoolType`) is used to determine the upper limit of the color scale
-      fetch(`http://localhost:5004/max_value?metric=${encodeURIComponent(selectedMetric)}&schoolType=${selectedSchoolType}`)
+      fetch(`${BACKEND_URL}/districts?metric=${encodeURIComponent(selectedMetric)}&schoolType=${selectedSchoolType}`)
         .then(response => response.json())
         .then(data => {
           if (data && data.maxValue) {
